@@ -1,0 +1,25 @@
+Standard CSV Analysis:
+Standard CSV Analysis (Row-based):
+  Total cars processed: 10000
+  Average price: $36,503.00
+  Time taken: 0.009502 seconds
+
+Transposed CSV Analysis:
+Transposed CSV Analysis (Column-based):
+  Total cars processed: 10000
+  Average price: $36,503.00
+  Time taken: 0.007395 seconds
+
+Silver Car Count (Standard CSV):
+Standard CSV Analysis (Row-based) - Silver Car Count:
+  Total cars processed: 10000
+  Silver cars found: 961
+  Percentage: 9.61%
+  Time taken: 0.007832 seconds
+
+Silver Car Count (Transposed CSV):
+Transposed CSV Analysis (Column-based) - Silver Car Count:
+  Total cars processed: 10000
+  Silver cars found: 961
+  Percentage: 9.61%
+  Time taken: 0.005784 seconds
