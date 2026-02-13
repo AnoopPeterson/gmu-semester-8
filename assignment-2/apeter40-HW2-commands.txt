@@ -1,0 +1,3 @@
+ssh apeter40@pc98.cloudlab.umass.edu
+
+scp -i /home/aasha/Documents/gmu-semester-8/ssh-keys/cloudlab-ssh-key1 /home/aasha/Documents/gmu-semester-8/assignment-2/HW2-profile.py apeter40@pc98.cloudlab.umass.edu:/users/apeter40/HW2-profile.py
