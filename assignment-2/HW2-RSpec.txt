@@ -1,0 +1,30 @@
+<rspec xmlns:client="http://www.protogeni.net/resources/rspec/ext/client/1" xmlns:emulab="http://www.protogeni.net/resources/rspec/ext/emulab/1" xmlns:jacks="http://www.protogeni.net/resources/rspec/ext/jacks/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.geni.net/resources/rspec/3" xsi:schemaLocation="http://www.geni.net/resources/rspec/3 http://www.geni.net/resources/rspec/3/request.xsd" type="request">
+  <rspec_tour xmlns="http://www.protogeni.net/resources/rspec/ext/apt-tour/1">
+    <description type="markdown">An example of constructing a profile with two nodes, node 1 and node 2. 
+IP address of node 1 is 192.168.1.1, IP address of node 2 is 192.168.1.2
+Node 1 also has a public IP address.
+
+Created by: apeter40, date: February 13, 2026, course: CDS421</description>
+    <instructions type="markdown">Wait for the profile instance to start, and then log in to either VM via the
+ssh ports specified. (Source: Geni-Lab tutorials)
+</instructions>
+  </rspec_tour>
+  <node client_id="web-server" exclusive="false">
+    <sliver_type name="emulab-xen"/>
+    <interface client_id="web-server:if1" component_id="eth1">
+      <ip address="192.168.1.1" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+    <emulab:routable_control_ip/>
+  </node>
+  <node client_id="data-server" exclusive="false">
+    <sliver_type name="emulab-xen"/>
+    <interface client_id="data-server:if2" component_id="eth2">
+      <ip address="192.168.1.2" netmask="255.255.255.0" type="ipv4"/>
+    </interface>
+  </node>
+  <link client_id="lan">
+    <interface_ref client_id="web-server:if1"/>
+    <interface_ref client_id="data-server:if2"/>
+    <link_type name="lan"/>
+  </link>
+</rspec>
