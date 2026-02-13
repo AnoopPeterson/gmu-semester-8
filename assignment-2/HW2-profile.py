@@ -1,6 +1,8 @@
 """An example of constructing a profile with two nodes, node 1 and node 2. 
 IP address of node 1 is 192.168.1.1, IP address of node 2 is 192.168.1.2
-Node 1 also has a public IP address. 
+Node 1 also has a public IP address.
+
+Created by: apeter40, date: February 13, 2026, course: CDS421
 
 Instructions:
 Wait for the profile instance to start, and then log in to either VM via the
