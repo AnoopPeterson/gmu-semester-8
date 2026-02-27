@@ -1,0 +1,13 @@
+ssh apeter40@pc547.emulab.net
+
+ssh -i ssh-keys/cloudlab-ssh-key1 apeter40@pc547.emulab.net
+
+sysbench cpu --cpu-max-prime=20000 --threads=1 --time=60 run > node-cpu-apeter40.txt
+
+sysbench memory --memory-oper=write --memory-block-size=1K --memory-scope=global --memory-total-size=100G --threads=1 --time=30 run > node-memory-apeter40.txt
+
+sysbench fileio --file-test-mode=rndrw --file-total-size=10G --file-block-size=4K --threads=1 --time=60 run > node-fileio-apeter40.txt
+
+scp -i ssh-keys/cloudlab-ssh-key1 apeter40@pc547.emulab.net:~/docker-results-apeter40.zip assignment-4/docker-results-apeter40.zip
+
+scp -i ssh-keys/cloudlab-ssh-key1 apeter40@pc547.emulab.net:~/node-results-apeter40.zip assignment-4/node-results-apeter40.zip
