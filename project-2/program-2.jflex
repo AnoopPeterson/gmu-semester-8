@@ -30,6 +30,7 @@
   static final int INT_LIT = 22;
   static final int RET_SYM = 23;
   static final int AT = 24;
+  static final int MOD = 25;
 
   static program2 lexer;
   static int currentToken;
@@ -200,7 +201,7 @@
      term' -> * factor term' | / factor term' | e */
   static void term() {
     factor();
-    while (currentToken == MULT || currentToken == DIV) {
+    while (currentToken == MULT || currentToken == DIV || currentToken == MOD) {
       currentToken = getToken();
       factor();
     }
@@ -241,6 +242,7 @@
 %%
 
 "!"[^\n]*       { /* skip comments */ }
+"//"[^\n]*      { /* skip comments */ }
 [ \t\r]+        { /* skip whitespace */ }
 \n              { lineCount++; }
 
@@ -258,6 +260,7 @@
 "-"             { return MINUS; }
 "*"             { return MULT; }
 "/"             { return DIV; }
+"%"             { return MOD; }
 "("             { return LPAREN; }
 ")"             { return RPAREN; }
 "{"             { return LBRACE; }
