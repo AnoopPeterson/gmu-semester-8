@@ -1,0 +1,3 @@
+ssh -p 25011 apeter40@pc604.emulab.net
+ssh -p 25010 apeter40@pc604.emulab.net
+ssh -p 25012 apeter40@pc604.emulab.net
