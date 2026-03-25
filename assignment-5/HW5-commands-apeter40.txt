@@ -1,3 +1,15 @@
 ssh -p 25011 apeter40@pc604.emulab.net
 ssh -p 25010 apeter40@pc604.emulab.net
 ssh -p 25012 apeter40@pc604.emulab.net
+
+ssh -i cloudlab-ssh-key1 -p 25011 apeter40@pc604.emulab.net
+
+scp -i cloudlab-ssh-key1 -P 25011 apeter40@pc604.emulab.net:~/ifconfig-thor-apeter40.txt .
+
+ssh -i cloudlab-ssh-key1 -p 25010 apeter40@pc604.emulab.net
+
+scp -i cloudlab-ssh-key1 -P 25010 apeter40@pc604.emulab.net:~/ifconfig-loki-apeter40.txt .
+
+ssh -i cloudlab-ssh-key1 -p 25012 apeter40@pc604.emulab.net
+
+scp -i cloudlab-ssh-key1 -P 25012 apeter40@pc604.emulab.net:~/ifconfig-router-apeter40.txt .
