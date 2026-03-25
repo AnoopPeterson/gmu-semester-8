@@ -13,3 +13,7 @@ scp -i cloudlab-ssh-key1 -P 25010 apeter40@pc604.emulab.net:~/ifconfig-loki-apet
 ssh -i cloudlab-ssh-key1 -p 25012 apeter40@pc604.emulab.net
 
 scp -i cloudlab-ssh-key1 -P 25012 apeter40@pc604.emulab.net:~/ifconfig-router-apeter40.txt .
+
+ping -c 3 10.10.2.100
+
+ping -c 3 10.10.1.100
