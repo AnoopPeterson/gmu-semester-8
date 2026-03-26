@@ -17,3 +17,5 @@ scp -i cloudlab-ssh-key1 -P 25012 apeter40@pc604.emulab.net:~/ifconfig-router-ap
 ping -c 3 10.10.2.100
 
 ping -c 3 10.10.1.100
+
+scp -i cloudlab-ssh-key1 -P 25012 configRouter.sh.txt apeter40@pc604.emulab.net:~/configRouter.sh.txt
