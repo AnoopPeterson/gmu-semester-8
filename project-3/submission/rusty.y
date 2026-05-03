@@ -14,6 +14,42 @@ char *fn_name;
 int label_ctr = 1;
 int str_ctr = 1;
 
+/* if-expression context stack: merge reg, labels, and a flag for whether
+ * any branch actually produced a value */
+static int if_merge[32];
+static int if_l1[32];
+static int if_l2[32];
+static int if_used[32];
+static int if_sp = 0;
+
+/* Argument-staging stacks: each actual expression's value is pushed onto
+ * arg_stack rather than moved into a parameter register immediately, so
+ * later actuals can still read the incoming parameter registers.  The
+ * marker stack supports nested calls. */
+static int arg_reg[64];
+static int arg_type[64];
+static int arg_top = 0;
+static int arg_markers[16];
+static int arg_msp = 0;
+
+static void call_begin(void) { arg_markers[arg_msp++] = arg_top; }
+static void call_push(int r, int t) { arg_reg[arg_top] = r; arg_type[arg_top] = t; arg_top++; }
+static void call_emit_moves(void) {
+	int base = arg_markers[arg_msp - 1];
+	int n = arg_top - base;
+	for (int i = 0; i < n; i++) {
+		int r = arg_reg[base + i];
+		int t = arg_type[base + i];
+		if (t == IS_INT_ARRAY || t == IS_BOOL_ARRAY)
+			printf("\tmovq %s, %s\n", reg64(r), param_reg64(i + 1));
+		else
+			printf("\tmovl %s, %s\n", reg32(r), param_reg32(i + 1));
+		free_reg(r);
+	}
+	arg_top = base;
+	arg_msp--;
+}
+
 /* Load the value of a variable into a freshly allocated register.
  * Returns the register index. */
 static int load_var(char *name) {
@@ -21,8 +57,13 @@ static int load_var(char *name) {
 	int r = get_reg();
 	if (!v) return r;
 	if (v->is_param) {
-		printf("//TEST: %s %s\n", name, param_reg32(v->is_param));
-		printf("\tmovl %s, %s\n", param_reg32(v->is_param), reg32(r));
+		if (v->type == IS_INT_ARRAY || v->type == IS_BOOL_ARRAY) {
+			printf("//TEST: %s %s\n", name, param_reg64(v->is_param));
+			printf("\tmovq %s, %s\n", param_reg64(v->is_param), reg64(r));
+		} else {
+			printf("//TEST: %s %s\n", name, param_reg32(v->is_param));
+			printf("\tmovl %s, %s\n", param_reg32(v->is_param), reg32(r));
+		}
 	} else if (v->type == IS_INT_ARRAY || v->type == IS_BOOL_ARRAY) {
 		printf("//TEST: %s %d(%%rsp)\n", name, v->ctr * 4);
 		printf("\tmovq %d(%%rsp), %s\n", v->ctr * 4, reg64(r));
@@ -248,10 +289,16 @@ expr		:	ID
 			{ $$ = $2; }
 		|	ID '[' expr ']'
 			{ /* load a[idx] into a fresh reg */
-			  int aoff = var_offset($1);
+			  var_ptr v = lookup_var($1);
 			  int pr = get_reg();
-			  printf("//TEST: %s %d(%%rsp)\n", $1, aoff);
-			  printf("\tmovq %d(%%rsp), %s\n", aoff, reg64(pr));
+			  if (v && v->is_param) {
+				printf("//TEST: %s %s\n", $1, param_reg64(v->is_param));
+				printf("\tmovq %s, %s\n", param_reg64(v->is_param), reg64(pr));
+			  } else {
+				int aoff = var_offset($1);
+				printf("//TEST: %s %d(%%rsp)\n", $1, aoff);
+				printf("\tmovq %d(%%rsp), %s\n", aoff, reg64(pr));
+			  }
 			  printf("\tmovl (%s,%s,4), %s\n",
 				 reg64(pr), reg64($3.reg), reg32(pr));
 			  free_reg($3.reg);
@@ -262,9 +309,11 @@ expr		:	ID
 			{ /* caller-save before a call with no args */
 			  printf("// call %s\n", $1);
 			  emit_caller_save();
+			  call_begin();
 			}
 			')'
-			{ printf("\tcall %s\n", $1);
+			{ call_emit_moves();
+			  printf("\tcall %s\n", $1);
 			  emit_caller_restore();
 			  int r = get_reg();
 			  printf("\tmovl %%eax, %s\n", reg32(r));
@@ -277,9 +326,11 @@ expr		:	ID
 		|	ID '('
 			{ printf("// call %s\n", $1);
 			  emit_caller_save();
+			  call_begin();
 			}
 			actuals ')'
-			{ printf("\tcall %s\n", $1);
+			{ call_emit_moves();
+			  printf("\tcall %s\n", $1);
 			  emit_caller_restore();
 			  int r = get_reg();
 			  printf("\tmovl %%eax, %s\n", reg32(r));
@@ -290,29 +341,52 @@ expr		:	ID
 			  else $$.type = IS_INT;
 			}
 		|	IF_T expr '{'
-			{ /* L1 = else-label */
-			  $<ival>$ = label_ctr++;
+			{ int mr = get_reg();
+			  int l1 = label_ctr++;
+			  int l2 = label_ctr++;
+			  if_merge[if_sp] = mr;
+			  if_l1[if_sp]    = l1;
+			  if_l2[if_sp]    = l2;
+			  if_used[if_sp]  = 0;
+			  if_sp++;
 			  printf("\tcmpl $0, %s\n", reg32($2.reg));
 			  free_reg($2.reg);
-			  printf("\tje L%d\n", $<ival>$);
+			  printf("\tje L%d\n", l1);
 			  create_scope(NULL);
 			}
 			statements
-			{ /* free body result, jump past else */
-			  $<ival>$ = label_ctr++;
-			  if ($5.reg >= 0) free_reg($5.reg);
-			  printf("\tjmp L%d\n", $<ival>$);
-			  printf("L%d:\n", $<ival>4);
+			{ int t = if_sp - 1;
+			  if ($5.reg >= 0) {
+				printf("\tmovl %s, %s\n",
+				       reg32($5.reg), reg32(if_merge[t]));
+				free_reg($5.reg);
+				if_used[t] = 1;
+			  }
+			  printf("\tjmp L%d\n", if_l2[t]);
+			  printf("L%d:\n", if_l1[t]);
 			  exit_scope();
 			}
 			'}' ELSE_T '{'
 			{ create_scope(NULL); }
 			statements '}'
-			{ if ($11.reg >= 0) free_reg($11.reg);
-			  printf("L%d:\n", $<ival>6);
+			{ int t = if_sp - 1;
+			  if ($11.reg >= 0) {
+				printf("\tmovl %s, %s\n",
+				       reg32($11.reg), reg32(if_merge[t]));
+				free_reg($11.reg);
+				if_used[t] = 1;
+			  }
+			  printf("L%d:\n", if_l2[t]);
 			  exit_scope();
-			  $$.type = IS_VOID;
-			  $$.reg  = -1;
+			  if (if_used[t]) {
+				$$.reg  = if_merge[t];
+				$$.type = IS_INT;
+			  } else {
+				free_reg(if_merge[t]);
+				$$.reg  = -1;
+				$$.type = IS_VOID;
+			  }
+			  if_sp--;
 			}
 		|	READ_T '(' ')'
 			{ printf("// INPUT\n");
@@ -327,13 +401,11 @@ expr		:	ID
 		;
 actuals		:	actuals ',' expr
 			{ $$ = $1 + 1;
-			  printf("\tmovl %s, %s\n", reg32($3.reg), param_reg32($$));
-			  free_reg($3.reg);
+			  call_push($3.reg, $3.type);
 			}
 		|	expr
 			{ $$ = 1;
-			  printf("\tmovl %s, %s\n", reg32($1.reg), param_reg32(1));
-			  free_reg($1.reg);
+			  call_push($1.reg, $1.type);
 			}
 		;
 statement	:	LET_T ID '=' expr
@@ -382,10 +454,15 @@ statement	:	LET_T ID '=' expr
 			  $$.type = IS_VOID; $$.reg = -1;
 			}
 		|	ID '[' expr ']' '=' expr
-			{ int aoff = var_offset($1);
+			{ var_ptr v = lookup_var($1);
 			  int pr = get_reg();
-			  printf("//TEST: %s %d(%%rsp)\n", $1, aoff);
-			  printf("\tmovq %d(%%rsp), %s\n", aoff, reg64(pr));
+			  if (v && v->is_param) {
+				printf("//TEST: %s %s\n", $1, param_reg64(v->is_param));
+				printf("\tmovq %s, %s\n", param_reg64(v->is_param), reg64(pr));
+			  } else if (v) {
+				printf("//TEST: %s %d(%%rsp)\n", $1, v->ctr * 4);
+				printf("\tmovq %d(%%rsp), %s\n", v->ctr * 4, reg64(pr));
+			  }
 			  printf("\tmovl %s, (%s,%s,4)\n",
 				 reg32($6.reg), reg64(pr), reg64($3.reg));
 			  free_reg(pr);

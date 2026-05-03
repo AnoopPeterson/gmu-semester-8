@@ -2,7 +2,7 @@
 .globl rusty_main
 	.type   rusty_main, @function
 rusty_main:
-// callee save 
+// callee save
 	pushq %rbx
 	pushq %rbp
 	pushq %r12
@@ -27,7 +27,7 @@ rusty_main:
 	call calloc
 //TEST: a 0(%rsp)
 	movq %rax, 0(%rsp)
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -43,7 +43,7 @@ L1:
 //TEST: i 8(%rsp)
 	movl 8(%rsp), %r10d
 	movl $10, %r11d
-	cmpl %r11d,%r10d
+	cmpl %r11d, %r10d
 	setl %al
 	movzbq %al, %rax
 	movl %eax, %r10d
@@ -60,7 +60,7 @@ L1:
 	movq %r10, 112(%rsp)
 	movq %r11, 120(%rsp)
 	call rusty_input
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -69,11 +69,11 @@ L1:
 	movq 104(%rsp), %r9
 	movq 112(%rsp), %r10
 	movq 120(%rsp), %r11
-	movl %eax, %r11d
+	movl %eax, %r10d
 //TEST: x 12(%rsp)
-	movl %r11d, 12(%rsp)
+	movl %r10d, 12(%rsp)
 //TEST: x 12(%rsp)
-	movl 12(%rsp), %r11d
+	movl 12(%rsp), %r10d
 // printf
 // caller save
 	movq %rdi, 64(%rsp)
@@ -84,11 +84,11 @@ L1:
 	movq %r9, 104(%rsp)
 	movq %r10, 112(%rsp)
 	movq %r11, 120(%rsp)
-	movl %r11d, %esi
+	movl %r10d, %esi
 	movq S1(%rip), %rdi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -98,23 +98,22 @@ L1:
 	movq 112(%rsp), %r10
 	movq 120(%rsp), %r11
 //TEST: i 8(%rsp)
-	movl 8(%rsp), %r11d
+	movl 8(%rsp), %r10d
 //TEST: x 12(%rsp)
-	movl 12(%rsp), %ebx
+	movl 12(%rsp), %r11d
 //TEST: a 0(%rsp)
-	movq 0(%rsp), %rbp
-	leaq (%rbp,%r11,4), %rbp
-	movl %ebx, (%rbp)
+	movq 0(%rsp), %rbx
+	movl %r11d, (%rbx,%r10,4)
 //TEST: i 8(%rsp)
-	movl 8(%rsp), %r11d
-	movl $1, %ebx
-	addl %ebx, %r11d
+	movl 8(%rsp), %r10d
+	movl $1, %r11d
+	addl %r11d, %r10d
 //TEST: i 8(%rsp)
-	movl %r11d, 8(%rsp)
-//Scope (null) with 0 vars:
-//x(1, 0, 3)	
+	movl %r10d, 8(%rsp)
 	jmp L1
 L2:
+//Scope (null) with 0 vars:
+//x(1, 0, 3)	
 // printf
 	.data
 .STR1:
@@ -132,7 +131,7 @@ L2:
 	movl $.STR1, %edi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -148,18 +147,17 @@ L3:
 //TEST: i 8(%rsp)
 	movl 8(%rsp), %r10d
 	movl $10, %r11d
-	cmpl %r11d,%r10d
+	cmpl %r11d, %r10d
 	setl %al
 	movzbq %al, %rax
 	movl %eax, %r10d
 	cmpl $0, %r10d
 	je L4
 //TEST: i 8(%rsp)
-	movl 8(%rsp), %r11d
-// get address then add expr*4
+	movl 8(%rsp), %r10d
 //TEST: a 0(%rsp)
-	movq 0(%rsp), %rbx
-	movq (%rbx,%r11,4),%rbx
+	movq 0(%rsp), %r11
+	movl (%r11,%r10,4), %r11d
 // printf
 // caller save
 	movq %rdi, 64(%rsp)
@@ -170,11 +168,11 @@ L3:
 	movq %r9, 104(%rsp)
 	movq %r10, 112(%rsp)
 	movq %r11, 120(%rsp)
-	movl %ebx, %esi
+	movl %r11d, %esi
 	movq S1(%rip), %rdi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -184,19 +182,19 @@ L3:
 	movq 112(%rsp), %r10
 	movq 120(%rsp), %r11
 //TEST: i 8(%rsp)
-	movl 8(%rsp), %r11d
-	movl $1, %ebx
-	addl %ebx, %r11d
+	movl 8(%rsp), %r10d
+	movl $1, %r11d
+	addl %r11d, %r10d
 //TEST: i 8(%rsp)
-	movl %r11d, 8(%rsp)
-//Scope (null) with 0 vars:
-
+	movl %r10d, 8(%rsp)
 	jmp L3
 L4:
+//Scope (null) with 0 vars:
+
 //Scope main with 4 vars:
 //i(1, 0, 2)	//a(3, 0, 0)	
 	addq    $128, %rsp
-// callee restore 
+// callee restore
 	popq %r15
 	popq %r14
 	popq %r13
@@ -205,6 +203,6 @@ L4:
 	popq %rbx
 	ret
 	.size   rusty_main, .-rusty_main
+	.section        .note.GNU-stack,"",@progbits
 //Scope global with 1 vars:
 //main(7, 0, 0)	
-	.section        .note.GNU-stack,"",@progbits

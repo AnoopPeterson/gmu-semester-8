@@ -2,7 +2,7 @@
 .globl rusty_main
 	.type   rusty_main, @function
 rusty_main:
-// callee save 
+// callee save
 	pushq %rbx
 	pushq %rbp
 	pushq %r12
@@ -27,7 +27,7 @@ rusty_main:
 	movl $.STR1, %edi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -57,7 +57,7 @@ rusty_main:
 	movq S1(%rip), %rdi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -83,7 +83,7 @@ rusty_main:
 	movl $.STR2, %edi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -121,7 +121,7 @@ rusty_main:
 	movq S1(%rip), %rdi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -147,7 +147,7 @@ rusty_main:
 	movl $.STR3, %edi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -172,7 +172,7 @@ rusty_main:
 	movq S1(%rip), %rdi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -184,7 +184,7 @@ rusty_main:
 //Scope main with 2 vars:
 //b(1, 0, 1)	//a(1, 0, 0)	
 	addq    $128, %rsp
-// callee restore 
+// callee restore
 	popq %r15
 	popq %r14
 	popq %r13
@@ -193,6 +193,6 @@ rusty_main:
 	popq %rbx
 	ret
 	.size   rusty_main, .-rusty_main
+	.section        .note.GNU-stack,"",@progbits
 //Scope global with 1 vars:
 //main(7, 0, 0)	
-	.section        .note.GNU-stack,"",@progbits

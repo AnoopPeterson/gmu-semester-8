@@ -3,6 +3,7 @@
 
 int lineno = 1;
 %}
+%option noyywrap
 %%
 bool		{return(BOOL_T);}
 false		{return(FALSE_T);}

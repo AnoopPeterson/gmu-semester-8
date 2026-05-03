@@ -2,7 +2,7 @@
 .globl rusty_main
 	.type   rusty_main, @function
 rusty_main:
-// callee save 
+// callee save
 	pushq %rbx
 	pushq %rbp
 	pushq %r12
@@ -21,7 +21,7 @@ rusty_main:
 	movq %r10, 112(%rsp)
 	movq %r11, 120(%rsp)
 	call rusty_input
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -49,7 +49,7 @@ rusty_main:
 	movq S1(%rip), %rdi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -62,27 +62,27 @@ L1:
 //TEST: a 0(%rsp)
 	movl 0(%rsp), %r10d
 	movl $0, %r11d
-	cmpl %r11d,%r10d
+	cmpl %r11d, %r10d
 	setg %al
 	movzbq %al, %rax
 	movl %eax, %r10d
 	cmpl $0, %r10d
 	je L2
 //TEST: a 0(%rsp)
-	movl 0(%rsp), %r11d
-	movl $10, %ebx
-	cmpl %ebx,%r11d
+	movl 0(%rsp), %r10d
+	movl $10, %r11d
+	cmpl %r11d, %r10d
 	setg %al
 	movzbq %al, %rax
-	movl %eax, %r11d
-	cmpl $0, %r11d
+	movl %eax, %r10d
+	cmpl $0, %r10d
 	je L3
 //TEST: a 0(%rsp)
-	movl 0(%rsp), %ebx
-	movl $2, %ebp
-	subl %ebp, %ebx
+	movl 0(%rsp), %r10d
+	movl $2, %ebx
+	subl %ebx, %r10d
 //TEST: a 0(%rsp)
-	movl %ebx, 0(%rsp)
+	movl %r10d, 0(%rsp)
 // printf
 	.data
 .STR1:
@@ -100,7 +100,7 @@ L1:
 	movl $.STR1, %edi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -109,16 +109,16 @@ L1:
 	movq 104(%rsp), %r9
 	movq 112(%rsp), %r10
 	movq 120(%rsp), %r11
-//Scope (null) with 0 vars:
-
 	jmp L4
 L3:
+//Scope (null) with 0 vars:
+
 //TEST: a 0(%rsp)
-	movl 0(%rsp), %ebx
-	movl $1, %ebp
-	subl %ebp, %ebx
+	movl 0(%rsp), %r10d
+	movl $1, %ebx
+	subl %ebx, %r10d
 //TEST: a 0(%rsp)
-	movl %ebx, 0(%rsp)
+	movl %r10d, 0(%rsp)
 // printf
 	.data
 .STR2:
@@ -136,7 +136,7 @@ L3:
 	movl $.STR2, %edi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -145,18 +145,17 @@ L3:
 	movq 104(%rsp), %r9
 	movq 112(%rsp), %r10
 	movq 120(%rsp), %r11
-//Scope (null) with 0 vars:
-
-	movl %eax, %eax
 L4:
 //Scope (null) with 0 vars:
 
 	jmp L1
 L2:
+//Scope (null) with 0 vars:
+
 //Scope main with 1 vars:
 //a(1, 0, 0)	
 	addq    $128, %rsp
-// callee restore 
+// callee restore
 	popq %r15
 	popq %r14
 	popq %r13
@@ -165,6 +164,6 @@ L2:
 	popq %rbx
 	ret
 	.size   rusty_main, .-rusty_main
+	.section        .note.GNU-stack,"",@progbits
 //Scope global with 1 vars:
 //main(7, 0, 0)	
-	.section        .note.GNU-stack,"",@progbits

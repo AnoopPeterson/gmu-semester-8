@@ -2,7 +2,7 @@ CC      = gcc
 CFLAGS  = -g -Wno-implicit-function-declaration
 
 rusty:	lex.yy.c rusty.tab.c stab.c stab.h codegen.c codegen.h
-	$(CC) $(CFLAGS) -o rusty lex.yy.c rusty.tab.c stab.c codegen.c -lfl
+	$(CC) $(CFLAGS) -o rusty lex.yy.c rusty.tab.c stab.c codegen.c
 
 lex.yy.c:	rusty.l rusty.tab.h
 	flex rusty.l

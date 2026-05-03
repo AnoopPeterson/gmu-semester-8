@@ -2,7 +2,7 @@
 .globl fun2
 	.type   fun2, @function
 fun2:
-// callee save 
+// callee save
 	pushq %rbx
 	pushq %rbp
 	pushq %r12
@@ -12,13 +12,14 @@ fun2:
 	subq $128, %rsp
 	movl $3, %r10d
 	movl $6, %r11d
-//TEST: a %edi
+//TEST: a %rdi
 	movq %rdi, %rbx
-	leaq (%rbx,%r10,4), %rbx
-	movl %r11d, (%rbx)
+	movl %r11d, (%rbx,%r10,4)
 	movl %eax, %eax
+//Scope fun2 with 0 vars:
+//a(3, 1, 0)	
 	addq    $128, %rsp
-// callee restore 
+// callee restore
 	popq %r15
 	popq %r14
 	popq %r13
@@ -27,13 +28,11 @@ fun2:
 	popq %rbx
 	ret
 	.size   fun2, .-fun2
-//Scope fun2 with 0 vars:
-//a(3, 1, 0)	
 	.text
 .globl fun1
 	.type   fun1, @function
 fun1:
-// callee save 
+// callee save
 	pushq %rbx
 	pushq %rbp
 	pushq %r12
@@ -41,6 +40,7 @@ fun1:
 	pushq %r14
 	pushq %r15
 	subq $128, %rsp
+// call fun2
 // caller save
 	movq %rdi, 64(%rsp)
 	movq %rsi, 72(%rsp)
@@ -50,12 +50,11 @@ fun1:
 	movq %r9, 104(%rsp)
 	movq %r10, 112(%rsp)
 	movq %r11, 120(%rsp)
-//TEST: a %edi
+//TEST: a %rdi
 	movq %rdi, %r10
-// ARRAY PARAM!!!
 	movq %r10, %rdi
 	call fun2
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -66,8 +65,10 @@ fun1:
 	movq 120(%rsp), %r11
 	movl %eax, %r10d
 	movl %r10d, %eax
+//Scope fun1 with 0 vars:
+//a(3, 1, 0)	
 	addq    $128, %rsp
-// callee restore 
+// callee restore
 	popq %r15
 	popq %r14
 	popq %r13
@@ -76,13 +77,11 @@ fun1:
 	popq %rbx
 	ret
 	.size   fun1, .-fun1
-//Scope fun1 with 0 vars:
-//a(3, 1, 0)	
 	.text
 .globl rusty_main
 	.type   rusty_main, @function
 rusty_main:
-// callee save 
+// callee save
 	pushq %rbx
 	pushq %rbp
 	pushq %r12
@@ -107,7 +106,7 @@ rusty_main:
 	call calloc
 //TEST: a 0(%rsp)
 	movq %rax, 0(%rsp)
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -116,6 +115,7 @@ rusty_main:
 	movq 104(%rsp), %r9
 	movq 112(%rsp), %r10
 	movq 120(%rsp), %r11
+// call fun1
 // caller save
 	movq %rdi, 64(%rsp)
 	movq %rsi, 72(%rsp)
@@ -127,10 +127,9 @@ rusty_main:
 	movq %r11, 120(%rsp)
 //TEST: a 0(%rsp)
 	movq 0(%rsp), %r10
-// ARRAY PARAM!!!
 	movq %r10, %rdi
 	call fun1
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -141,10 +140,9 @@ rusty_main:
 	movq 120(%rsp), %r11
 	movl %eax, %r10d
 	movl $3, %r11d
-// get address then add expr*4
 //TEST: a 0(%rsp)
 	movq 0(%rsp), %rbx
-	movq (%rbx,%r11,4),%rbx
+	movl (%rbx,%r11,4), %ebx
 // printf
 // caller save
 	movq %rdi, 64(%rsp)
@@ -159,7 +157,7 @@ rusty_main:
 	movq S1(%rip), %rdi
 	movl $0, %eax
 	call printf
-// caller restore 
+// caller restore
 	movq 64(%rsp), %rdi
 	movq 72(%rsp), %rsi
 	movq 80(%rsp), %rdx
@@ -171,7 +169,7 @@ rusty_main:
 //Scope main with 2 vars:
 //a(3, 0, 0)	
 	addq    $128, %rsp
-// callee restore 
+// callee restore
 	popq %r15
 	popq %r14
 	popq %r13
@@ -180,6 +178,6 @@ rusty_main:
 	popq %rbx
 	ret
 	.size   rusty_main, .-rusty_main
+	.section        .note.GNU-stack,"",@progbits
 //Scope global with 3 vars:
 //main(7, 0, 2)	//fun1(7, 0, 1)	//fun2(7, 0, 1)	
-	.section        .note.GNU-stack,"",@progbits
