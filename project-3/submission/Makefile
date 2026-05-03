@@ -10,5 +10,9 @@ lex.yy.c:	rusty.l rusty.tab.h
 rusty.tab.c rusty.tab.h:	rusty.y
 	bison -vd rusty.y
 
+run:	rusty
+	./rusty < $(PROG) > prog.s
+	$(CC) -o a.out rusty_main.c prog.s
+
 clean:
-	rm -f lex.yy.c rusty.tab.* rusty.output rusty *.stackdump *.s a.out
+	rm -f lex.yy.c rusty.tab.* rusty.output rusty *.stackdump *.s a.out prog.s

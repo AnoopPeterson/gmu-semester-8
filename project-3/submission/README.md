@@ -11,6 +11,10 @@ assembly on `stdout`, suitable for linking with the provided
 - `stab.c/h`   - symbol table (scopes, variables, functions)
 - `codegen.c/h`- register allocator and x86-64 emission helpers
 - `Makefile`   - build rules
+- `rusty_main.c` - C driver (`rusty_main` entry, `printf` format strings
+  `S0`/`S1`, and `rusty_input`). This version reads integers from stdin
+  with `scanf` when stdin is redirected from a file or pipe, and falls
+  back to the original pseudo-random behaviour when run interactively.
 
 ## Build
 
@@ -24,12 +28,22 @@ This produces the `rusty` executable.
 
 ```
 ./rusty < program.r > program.s
-gcc -o program rusty_main.c program.s
-./program
+gcc -o a.out rusty_main.c program.s
+
+# Interactive (random inputs), or pass an upper bound:
+./a.out
+./a.out 100
+
+# Reading integers from a file:
+./a.out < input.txt
 ```
 
-`rusty_main.c` supplies `rusty_main`'s C entry point, the printf
-format strings `S0`/`S1`, and `rusty_input()` (a mocked scanf).
+A shortcut target is provided:
+
+```
+make run PROG=../rusty_code/sort.r
+./a.out < ../rusty_code/sort.txt
+```
 
 ## Coverage (per assignment)
 

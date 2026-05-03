@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "codegen.h"
 
-/* Register allocator: 8 callee/general registers used for temporaries. */
+
 static char *regs32[8] = {"%r10d","%r11d","%ebx","%ebp","%r12d","%r13d","%r14d","%r15d"};
 static char *regs64[8] = {"%r10","%r11","%rbx","%rbp","%r12","%r13","%r14","%r15"};
 static int free_list[8] = {1,1,1,1,1,1,1,1};
@@ -80,11 +80,7 @@ void emit_func_epilogue(const char *name) {
 	printf("\t.size   %s, .-%s\n", name, name);
 }
 
-/*
- * emit_cmp: emit relational compare and materialize a 0/1 result into lhs.
- * Uses: cmpl rhs, lhs  -> flags reflect (lhs - rhs); the caller passes the
- * set-instruction suffix (sete, setne, setl, setle, setg, setge).
- */
+
 void emit_cmp(const char *setop, int lhs, int rhs) {
 	printf("\tcmpl %s, %s\n", reg32(rhs), reg32(lhs));
 	printf("\t%s %%al\n", setop);
