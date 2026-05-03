@@ -1,0 +1,24 @@
+sh run_code io1
+sh run_code io2
+sh run_code exprs 
+sh run_code fun1 
+sh run_code fun2 
+sh run_code fun3 
+sh run_code fun4 
+sh run_code if1
+sh run_code if2
+sh run_code if3
+sh run_code while1
+sh run_code while2
+sh run_code vars1
+sh run_code vars2
+
+sh run_code array1
+sh run_code array2
+sh run_code array3
+sh run_code array4
+
+sh run_code test0
+sh run_code test1
+sh run_code test2
+sh run_code test3
