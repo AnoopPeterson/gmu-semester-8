@@ -1,0 +1,563 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%md\n### Please enter the following information:\nStudent name: Anoop Peterson\nG-number: G01360121\nDate: 05/04/2026",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:50:32+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<h3>Please enter the following information:</h3>\n<p>Student name: Anoop Peterson\n<br  />G-number: G01360121\n<br  />Date: 05/04/2026</p>\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872100_617223467",
+      "id": "paragraph_1669088851886_172134450",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:784",
+      "dateFinished": "2026-05-05T03:50:32+0000",
+      "dateStarted": "2026-05-05T03:50:32+0000"
+    },
+    {
+      "text": "%md\n## Task 1 - Calculating Pi with PySpark\n\nBelow you will find a description of a set of steps. Using the paragraph cell below each step complete the code as necessary. After completing your work please download and save the note as a .zpln file on your computer. You will need to submit this file as part of this assignment.",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:47:52+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "editorMode": "ace/mode/markdown",
+        "colWidth": 12,
+        "editorHide": true,
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h2>Task 1 - Calculating Pi with PySpark</h2>\n<p>Below you will find a description of a set of steps. Using the paragraph cell below each step complete the code as necessary. After completing your work please download and save the note as a .zpln file on your computer. You will need to submit this file as part of this assignment.</p>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872101_197789170",
+      "id": "20221122-010932_294717752",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "READY",
+      "$$hashKey": "object:785"
+    },
+    {
+      "text": "%md\n#### (a) Import libraries and create a SparkContext using the code below:",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:47:52+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h4>(a) Import libraries and create a SparkContext using the code below:</h4>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872102_1802505410",
+      "id": "paragraph_1669080223776_1635991061",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "READY",
+      "$$hashKey": "object:786"
+    },
+    {
+      "text": "%spark.pyspark\nfrom pyspark import SparkConf, SparkContext\nimport numpy as np\nimport math\n\nsc = SparkContext.getOrCreate()",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:48:43+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12,
+        "editorHide": false,
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872102_675030044",
+      "id": "20221122-010932_1813270438",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:787",
+      "dateFinished": "2026-05-05T03:48:43+0000",
+      "dateStarted": "2026-05-05T03:48:43+0000"
+    },
+    {
+      "text": "%md\n#### (b) Create a numpy array with 1,000,000 values using the code below:",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:47:52+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h4>(b) Create a numpy array with 1,000,000 values using the code below:</h4>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872102_1185680386",
+      "id": "paragraph_1669080260188_485496240",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "READY",
+      "$$hashKey": "object:788"
+    },
+    {
+      "text": "%spark.pyspark\nn = 1000000\nar = np.arange(n)",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:48:48+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12,
+        "editorHide": false,
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872102_1794724824",
+      "id": "20221122-010932_1255573719",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:789",
+      "dateFinished": "2026-05-05T03:48:48+0000",
+      "dateStarted": "2026-05-05T03:48:48+0000"
+    },
+    {
+      "text": "%md\n#### (c) Create an RDD from the numpy array with 16 partitions using the sc.parallelize() function \n(hint: see Module 7 Part 3 for details on parallelize())",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:50:28+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<h4>(c) Create an RDD from the numpy array with 16 partitions using the sc.parallelize() function</h4>\n<p>(hint: see Module 7 Part 3 for details on parallelize())</p>\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872102_78112052",
+      "id": "paragraph_1669080309484_991251876",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:790",
+      "dateFinished": "2026-05-05T03:50:28+0000",
+      "dateStarted": "2026-05-05T03:50:28+0000"
+    },
+    {
+      "text": "%spark.pyspark\nrdd = sc.parallelize(ar, 16)",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:50:25+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12,
+        "editorHide": false,
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872102_2061707222",
+      "id": "20221122-010932_482949270",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:791",
+      "dateFinished": "2026-05-05T03:50:27+0000",
+      "dateStarted": "2026-05-05T03:50:25+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%md\n#### (d) Using <font color='red'>only</font> PySpark map() and reduce() calculate Euler's estimation of \\\\(\\frac{\\pi^2}{6}\\\\) and show your result\n(hint: see Module 7 Part 3 for a description of PySpark map() and reduce())",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:52:25+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<h4>(d) Using <font color='red'>only</font> PySpark map() and reduce() calculate Euler's estimation of \\(\\frac{\\pi^2}{6}\\) and show your result</h4>\n<p>(hint: see Module 7 Part 3 for a description of PySpark map() and reduce())</p>\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872103_467686990",
+      "id": "paragraph_1669080360410_1776575989",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:792",
+      "dateFinished": "2026-05-05T03:52:25+0000",
+      "dateStarted": "2026-05-05T03:52:25+0000"
+    },
+    {
+      "text": "%spark.pyspark\nrdd_map = rdd.map(lambda i: (1/(i * i)))\nrdd_map_reduce = rdd_map.reduce(lambda a, b: a + b)\nrdd_pi = math.sqrt(rdd_map_reduce * 6)\nprint(rdd_pi)",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:57:44+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "editorMode": "ace/mode/python",
+        "colWidth": 12,
+        "editorHide": false,
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inf\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://ip-172-31-10-252.ec2.internal:4040/jobs/job?id=4",
+              "$$hashKey": "object:2041"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872104_2054258064",
+      "id": "20221122-010932_725966853",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:793",
+      "dateFinished": "2026-05-05T03:57:45+0000",
+      "dateStarted": "2026-05-05T03:57:44+0000"
+    },
+    {
+      "text": "%md\n#### (e) Using the result calculated in (d), calculate the difference between your estimation of \\\\(\\pi\\\\) and the value of the constant math.pi in the Pyhton math module:",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:47:52+0000",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h4>(e) Using the result calculated in (d), calculate the difference between your estimation of \\(\\pi\\) and the value of the constant math.pi in the Pyhton math module:</h4>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872104_12454635",
+      "id": "paragraph_1669080761764_965472514",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "READY",
+      "$$hashKey": "object:794"
+    },
+    {
+      "text": "%spark.pyspark\n\ndiff = rdd_pi - math.pi\nprint(diff)",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:57:31+0000",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777952872104_1122323255",
+      "id": "paragraph_1669079856114_1527979719",
+      "dateCreated": "2026-05-05T03:47:52+0000",
+      "status": "FINISHED",
+      "$$hashKey": "object:795",
+      "dateFinished": "2026-05-05T03:57:31+0000",
+      "dateStarted": "2026-05-05T03:57:31+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "inf\n"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark.pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2026-05-05T03:57:22+0000",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1777953442074_795882388",
+      "id": "paragraph_1777953442074_795882388",
+      "dateCreated": "2026-05-05T03:57:22+0000",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:1899"
+    }
+  ],
+  "name": "HW8_Task_1",
+  "id": "2MSZ92HBC",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.11.1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/HW8_Task_1"
+}
